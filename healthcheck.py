@@ -4,22 +4,23 @@ import time
 import sys
 from urllib.parse import urlparse
 
+# Check for blank input
 if len(sys.argv) == 1:
     print("Input file name")
     exit()
 
 yaml_file = open(sys.argv[1], 'r')
 endpoints = yaml.safe_load(yaml_file)
-
 health_checks = {}
 
-#set the domain for each endpoint for easier lookup later
-#add unique domains to the health check dictionary
+# Set the domain for each endpoint for easier lookup later
+# Add unique domains to the health check dictionary
 for endpoint in endpoints:
     endpoint['domain'] = urlparse(endpoint['url']).netloc
     if endpoint['domain'] not in health_checks:
         health_checks[endpoint['domain']] = {'ups':0, 'total':0}
 
+# Format and execute HTTP request and check for 'up' criteria
 def isUp(endpoint):
     headers = endpoint.get('headers', '')
     method = endpoint.get('method', 'GET')
@@ -39,6 +40,7 @@ def isUp(endpoint):
 
 starttime = time.monotonic()
 while True:
+    # Check each endpoint and add results to healthcheck dictionary
     for endpoint in endpoints:
         health_checks[endpoint['domain']]['total'] +=1
         if isUp(endpoint):
