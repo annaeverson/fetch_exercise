@@ -24,16 +24,17 @@ for endpoint in endpoints:
 def isUp(endpoint):
     headers = endpoint.get('headers', '')
     method = endpoint.get('method', 'GET')
+    body = endpoint.get('body', '')
     if method == 'POST':
-        response = requests.post(endpoint['url'], headers=headers)
+        response = requests.post(endpoint['url'], headers=headers, data=body)
     elif method == 'PUT':
-        response = requests.put(endpoint['url'], headers=headers)
+        response = requests.put(endpoint['url'], headers=headers, data=body)
     elif method == 'PATCH':
-        response = requests.patch(endpoint['url'], headers=headers)
+        response = requests.patch(endpoint['url'], headers=headers, data=body)
     elif method == 'DELETE':
-        response = requests.delete(endpoint['url'], headers=headers)
+        response = requests.delete(endpoint['url'], headers=headers, data=body)
     elif method == "GET":
-        response = requests.get(endpoint['url'], headers=headers)
+        response = requests.get(endpoint['url'], headers=headers, data=body)
     if 200 <= response.status_code <= 299 and response.elapsed.total_seconds()<0.5:
         return True
     return False
