@@ -3,6 +3,7 @@ Checks HTTP endpoints from YAML file and returns the percentage of successful ch
 
 # Prereqs
 python3
+
 pip3
 
 # Installation
@@ -16,8 +17,13 @@ python3 healthcheck.py endpoints.yaml
 ```
 
 The yaml file must have the following schema:
+
 name (string, required)
+
 url (string, required)
+
 method (string, optional)
+
 headers (dictionary, optional) 
+
 body (string, optional)
